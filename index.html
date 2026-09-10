@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <meta name="theme-color"
+          content="#315C4A">
+
+    <title>CogniCare NER</title>
+
+    <link rel="stylesheet"
+          href="style.css">
+
+    <link rel="manifest"
+          href="manifest.json">
+
+</head>
+
+
+<body>
+
+
+<div id="app">
+
+
+    <!-- =================================================
+         LOGIN SCREEN
+    ================================================== -->
+
+    <section id="loginScreen"
+             class="login-screen">
+
+        <div class="login-card">
+
+            <div class="logo">
+
+                <div class="brain">
+                    🧠
+                </div>
+
+                <div class="leaf">
+                    🌿
+                </div>
+
+            </div>
+
+
+            <h1>
+                CogniCare NER
+            </h1>
+
+
+            <p class="tagline">
+                Care • Remember • Connect
+            </p>
+
+
+            <label>
+                Patient Name
+            </label>
+
+
+            <input
+                id="patientName"
+                type="text"
+                placeholder="Enter patient name">
+
+
+            <button
+                class="primary-btn"
+                onclick="enterApp()">
+
+                Enter CogniCare
+
+            </button>
+
+
+            <p class="note">
+
+                Cognitive support &
+                caregiver assistance platform
+
+            </p>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         MAIN APPLICATION
+    ================================================== -->
+
+    <div id="mainApp"
+         class="hidden">
+
+
+        <!-- HEADER -->
+
+        <header>
+
+            <div class="brand">
+
+                <div class="mini-logo">
+                    🧠🌿
+                </div>
+
+                <div>
+
+                    <h2>
+                        CogniCare NER
+                    </h2>
+
+                    <span id="connectionStatus">
+                        ● Checking...
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- LANGUAGE -->
+
+            <select id="language"
+                    onchange="changeLanguage()">
+
+                <option value="en">
+                    English
+                </option>
+
+                <option value="ta">
+                    தமிழ்
+                </option>
+
+                <option value="hi">
+                    हिन्दी
+                </option>
+
+                <option value="te">
+                    తెలుగు
+                </option>
+
+                <option value="kn">
+                    ಕನ್ನಡ
+                </option>
+
+                <option value="mr">
+                    मराठी
+                </option>
+
+                <option value="as">
+                    অসমীয়া
+                </option>
+
+
+                <optgroup label="NER Community Languages">
+
+                    <option value="brx">
+                        Bodo
+                    </option>
+
+                    <option value="kha">
+                        Khasi
+                    </option>
+
+                    <option value="grt">
+                        Garo
+                    </option>
+
+                    <option value="lus">
+                        Mizo
+                    </option>
+
+                    <option value="trp">
+                        Kokborok
+                    </option>
+
+                </optgroup>
+
+            </select>
+
+        </header>
+
+
+
+        <!-- =================================================
+             SCREEN 1 — HOME
+        ================================================== -->
+
+        <main id="home"
+              class="screen active">
+
+
+            <div class="welcome">
+
+                <div>
+
+                    <p>
+                        Welcome 👋
+                    </p>
+
+                    <h1 id="welcomeName">
+                        Good Morning!
+                    </h1>
+
+                    <p id="welcomeText">
+                        Let's keep your mind active today.
+                    </p>
+
+                </div>
+
+
+                <div class="big-brain">
+                    🧠
+                </div>
+
+            </div>
+
+
+
+            <!-- OFFLINE STATUS -->
+
+            <div class="offline-box">
+
+                <div class="offline-icon">
+                    📡
+                </div>
+
+                <div>
+
+                    <strong>
+                        Offline Ready
+                    </strong>
+
+                    <p>
+                        Core activities and reminders
+                        are stored locally.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <h2>
+                🧠 Cognitive Activities
+            </h2>
+
+
+
+            <div class="cards">
+
+
+                <!-- GAME 1 -->
+
+                <button
+                    class="card"
+                    onclick="openGame('story')">
+
+                    <span>
+                        🏡
+                    </span>
+
+                    <strong>
+                        My Village, My Story
+                    </strong>
+
+                    <small>
+                        Listen & remember
+                    </small>
+
+                </button>
+
+
+
+                <!-- GAME 2 -->
+
+                <button
+                    class="card"
+                    onclick="openGame('market')">
+
+                    <span>
+                        🧺
+                    </span>
+
+                    <strong>
+                        Market Basket Memory
+                    </strong>
+
+                    <small>
+                        Remember shopping
+                    </small>
+
+                </button>
+
+
+
+                <!-- GAME 3 -->
+
+                <button
+                    class="card"
+                    onclick="openGame('voice')">
+
+                    <span>
+                        🎤
+                    </span>
+
+                    <strong>
+                        Voice Memory Journey
+                    </strong>
+
+                    <small>
+                        Remember & speak
+                    </small>
+
+                </button>
+
+            </div>
+
+
+
+            <!-- VOICE ASSISTANT -->
+
+            <button
+                class="dashboard-button"
+                onclick="showScreen('assistant')">
+
+                🤖 Voice Memory Assistant
+
+            </button>
+
+
+
+            <!-- DASHBOARD -->
+
+            <button
+                class="dashboard-button"
+                onclick="showScreen('dashboard')">
+
+                📊 View Caregiver Progress
+
+            </button>
+
+        </main>
+
+
+
+        <!-- =================================================
+             SCREEN 2 — GAMES
+        ================================================== -->
+
+        <main id="game"
+              class="screen">
+
+
+            <button
+                class="back"
+                onclick="showScreen('home')">
+
+                ← Back
+
+            </button>
+
+
+            <div id="gameContent"></div>
+
+        </main>
+
+
+
+        <!-- =================================================
+             SCREEN 3 — VOICE ASSISTANT
+        ================================================== -->
+
+        <main id="assistant"
+              class="screen">
+
+
+            <button
+                class="back"
+                onclick="showScreen('home')">
+
+                ← Back
+
+            </button>
+
+
+            <div class="game-box">
+
+
+                <h1>
+                    🤖 Voice Memory Assistant
+                </h1>
+
+
+                <p>
+
+                    Tell me something you want
+                    to remember.
+
+                </p>
+
+
+
+                <!-- MICROPHONE -->
+
+                <button
+                    id="assistantMic"
+                    class="mic"
+                    onclick="startAssistantListening()">
+
+                    🎤
+
+                </button>
+
+
+
+                <h3 id="assistantStatus">
+
+                    Tap the microphone
+
+                </h3>
+
+
+
+                <!-- WHAT USER SAID -->
+
+                <div class="voice-result">
+
+                    <strong>
+                        You said:
+                    </strong>
+
+
+                    <p id="assistantHeard">
+
+                        Nothing yet...
+
+                    </p>
+
+                </div>
+
+
+
+                <!-- AI UNDERSTANDING -->
+
+                <div class="story">
+
+
+                    <strong>
+                        🤖 AI Understanding
+                    </strong>
+
+
+                    <p id="aiUnderstanding">
+
+                        Say a reminder such as:
+                        "Remind me to take medicine
+                        at 8 PM."
+
+                    </p>
+
+                </div>
+
+
+
+                <!-- QUICK REMINDERS -->
+
+                <h3>
+                    Quick Reminder
+                </h3>
+
+
+                <div class="items">
+
+
+                    <button
+                        class="item"
+                        onclick="quickReminder('Take medicine')">
+
+                        💊 Medicine
+
+                    </button>
+
+
+                    <button
+                        class="item"
+                        onclick="quickReminder('Drink water')">
+
+                        💧 Water
+
+                    </button>
+
+
+                    <button
+                        class="item"
+                        onclick="quickReminder('Doctor appointment')">
+
+                        🏥 Doctor
+
+                    </button>
+
+
+                    <button
+                        class="item"
+                        onclick="quickReminder('Call family')">
+
+                        📞 Family
+
+                    </button>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- REMINDER LIST -->
+
+            <div class="dashboard-card">
+
+                <h2>
+                    🔔 My Reminders
+                </h2>
+
+
+                <div id="assistantReminderList">
+
+                </div>
+
+            </div>
+
+        </main>
+
+
+
+        <!-- =================================================
+             SCREEN 4 — CAREGIVER DASHBOARD
+        ================================================== -->
+
+        <main id="dashboard"
+              class="screen">
+
+
+            <button
+                class="back"
+                onclick="showScreen('home')">
+
+                ← Back
+
+            </button>
+
+
+            <h1>
+                👨‍👩‍👧 Caregiver Dashboard
+            </h1>
+
+
+            <p class="subtitle">
+                Cognitive activity overview
+            </p>
+
+
+
+            <!-- STATISTICS -->
+
+            <div class="stats">
+
+
+                <div>
+
+                    <span>
+                        🧠
+                    </span>
+
+                    <b id="score">
+                        0
+                    </b>
+
+                    <small>
+                        Score
+                    </small>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        🧩
+                    </span>
+
+                    <b id="gamesPlayed">
+                        0
+                    </b>
+
+                    <small>
+                        Games Played
+                    </small>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        📈
+                    </span>
+
+                    <b id="level">
+                        1
+                    </b>
+
+                    <small>
+                        Difficulty
+                    </small>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- PROGRESS -->
+
+            <div class="dashboard-card">
+
+                <h2>
+                    🧠 Cognitive Activity Progress
+                </h2>
+
+
+                <div class="progress">
+
+                    <div id="progressBar">
+                    </div>
+
+                </div>
+
+
+                <p id="trend">
+
+                    Start playing to see progress.
+
+                </p>
+
+            </div>
+
+
+
+            <!-- AI INSIGHT -->
+
+            <div class="ai-card">
+
+
+                <div class="ai-icon">
+                    🤖
+                </div>
+
+
+                <div>
+
+                    <h3>
+                        AI Adaptive Insight
+                    </h3>
+
+
+                    <p id="aiText">
+
+                        Activity difficulty is adjusted
+                        according to the user's performance.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- REMINDER SUMMARY -->
+
+            <div class="dashboard-card">
+
+                <h2>
+                    🔔 Reminder Summary
+                </h2>
+
+
+                <p id="reminderCount">
+
+                    No reminders yet.
+
+                </p>
+
+            </div>
+
+
+
+            <!-- STATUS -->
+
+            <div class="alert-card">
+
+                🔔
+
+                <div>
+
+                    <strong>
+                        Caregiver Status
+                    </strong>
+
+                    <p>
+                        No concerning trend detected
+                        in this demonstration.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="warning">
+
+                ⚠️ CogniCare provides cognitive
+                support and monitoring.
+                It does not diagnose or cure dementia.
+
+            </div>
+
+        </main>
+
+
+
+        <!-- =================================================
+             BOTTOM NAVIGATION
+        ================================================== -->
+
+        <nav>
+
+
+            <button
+                onclick="showScreen('home')">
+
+                🏠
+
+                <small>
+                    Home
+                </small>
+
+            </button>
+
+
+
+            <button
+                onclick="openGame('story')">
+
+                🧠
+
+                <small>
+                    Games
+                </small>
+
+            </button>
+
+
+
+            <button
+                onclick="showScreen('assistant')">
+
+                🎤
+
+                <small>
+                    Assistant
+                </small>
+
+            </button>
+
+
+
+            <button
+                onclick="showScreen('dashboard')">
+
+                📊
+
+                <small>
+                    Progress
+                </small>
+
+            </button>
+
+        </nav>
+
+    </div>
+
+</div>
+
+
+
+<script src="app.js"></script>
+
+<script>
+function enterApp() {
+
+    const nameInput = document.getElementById("patientName");
+
+    let name = nameInput.value.trim();
+
+    if (name === "") {
+        name = "Friend";
+    }
+
+    document.getElementById("loginScreen").style.display = "none";
+
+    document.getElementById("mainApp").classList.remove("hidden");
+    document.getElementById("mainApp").style.display = "block";
+
+    document.getElementById("welcomeName").innerText =
+        "Good Morning, " + name + "! 👋";
+
+    localStorage.setItem("patientName", name);
+
+    if (typeof updateDashboard === "function") {
+        updateDashboard();
+    }
+
+    if (typeof displayReminders === "function") {
+        displayReminders();
+    }
+}
+</script>
+
+<script src="app.js"></script>
+
+</body>
+</html>
